@@ -1,8 +1,8 @@
 from fastapi import FastAPI,Depends,HTTPException
-from database import session,engine
-import database_models
-from models import User
-from database_models import Users
+from db.database import session,engine
+import models.database_models as database_models
+from schemas.models import User
+from models.database_models import Users
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 
@@ -32,11 +32,11 @@ def add_user(user:User,db:Session=Depends(get_db)):
         db.add(new_user)
         db.commit()
         db.refresh(new_user)
-        return new_user
+        return {"message":"User Created Successfully."}
     
-@api.put("/users/{id}")
-def update_user(id,user:User,db:Session=Depends(get_db)):
-    is_user_exists = db.query(Users).filter(Users.id==id).first()
-    if not is_user_exists:
-        raise HTTPException(status_code=404,detail='User not found.')
+# @api.put("/users/{id}")
+# def update_user(id,user:User,db:Session=Depends(get_db)):
+#     is_user_exists = db.query(Users).filter(Users.id==id).first()
+#     if not is_user_exists:
+#         raise HTTPException(status_code=404,detail='User not found.')
     
