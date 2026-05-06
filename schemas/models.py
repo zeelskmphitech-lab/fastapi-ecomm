@@ -6,7 +6,4 @@ class User(BaseModel):
     last_name : str
     username : str
     email : EmailStr
-    # password : str
-    
-class UserInDB(User):
-    hased_password : str
+    password : str

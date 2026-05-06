@@ -5,6 +5,7 @@ from schemas.models import User
 from models.database_models import Users
 from sqlalchemy.orm import Session
 from sqlalchemy import text
+from core.utils import get_hashed_password,verify_password,create_access_token,create_refresh_token
 
 api = FastAPI()
 
@@ -24,7 +25,8 @@ def get_users(db:Session= Depends(get_db)):
 @api.post("/register/",status_code=201)
 def add_user(user:User,db:Session=Depends(get_db)):
     is_email_exists =db.query(Users).filter(Users.email==user.email).first()
-    new_user = Users(**user.model_dump())
+    hashed_password = get_hashed_password(user.password)
+    new_user = Users(first_name=user.first_name,last_name=user.last_name,username=user.username,email=user.email,password=hashed_password)
     
     if is_email_exists:
         raise HTTPException(status_code=409,detail="Email Already registered.")
@@ -33,10 +35,4 @@ def add_user(user:User,db:Session=Depends(get_db)):
         db.commit()
         db.refresh(new_user)
         return {"message":"User Created Successfully."}
-    
-# @api.put("/users/{id}")
-# def update_user(id,user:User,db:Session=Depends(get_db)):
-#     is_user_exists = db.query(Users).filter(Users.id==id).first()
-#     if not is_user_exists:
-#         raise HTTPException(status_code=404,detail='User not found.')
     
