@@ -8,13 +8,22 @@ class User(BaseModel):
     username : str
     email : EmailStr
     password : str
+    is_seller : bool
     
+class UserUpdate(BaseModel):
+    first_name : Optional[str] = None
+    last_name : Optional[str] = None
+    username : Optional[str] = None
+    email : Optional[EmailStr] = None
+    is_seller : Optional[bool] = None
+
 class UserResponse(BaseModel):
     first_name : str
     last_name : str
     username : str
     email : EmailStr
-    
+    is_seller : bool
+
     model_config = ConfigDict(from_attributes=True)
     
 class TokenCreate(BaseModel):
@@ -35,9 +44,14 @@ class TokenResponse(BaseModel):
 
     model_config = ConfigDict(from_attributes=True)
     
-class Products(BaseModel):
-    product_id:int
+class Product(BaseModel):
     product_name:str
     product_description:str
     product_price:float
     product_stoke:int
+    
+class UpdateProduct(BaseModel):
+    product_name:Optional[str] = None
+    product_description:Optional[str] = None
+    product_price:Optional[float] = None
+    product_stoke:Optional[int] = None
