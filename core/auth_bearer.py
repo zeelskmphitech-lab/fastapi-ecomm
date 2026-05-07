@@ -3,6 +3,9 @@ from jose import jwt
 from .utils import JWT_SECRET_KEY,ALGORITHM
 from fastapi import HTTPException,Request
 from fastapi.security import HTTPAuthorizationCredentials,HTTPBearer
+from functools import wraps
+from models.database_models import Users,Token
+
 
 def decode_jwt(jwtoken:str):
     try:
@@ -40,3 +43,16 @@ class JWTBearer(HTTPBearer):
             isTokenValid = True
             
         return isTokenValid
+    
+def token_required(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        payload = decode_jwt(kwargs['dependencies'])
+        user_id = payload['sub']
+        data= kwargs['db'].query(Token).filter_by(user_id=user_id,access_token=kwargs['dependencies'],is_active=True).first()
+        if data:
+            return func(*args, **kwargs)
+        
+        else:
+            raise HTTPException(status_code=401,detail="Token blocked")
+    return wrapper

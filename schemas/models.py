@@ -1,4 +1,4 @@
-from pydantic import BaseModel,EmailStr,Field
+from pydantic import BaseModel,EmailStr,Field,ConfigDict
 from typing import Annotated,Optional,Any
 import datetime
 
@@ -15,6 +15,8 @@ class UserResponse(BaseModel):
     username : str
     email : EmailStr
     
+    model_config = ConfigDict(from_attributes=True)
+    
 class TokenCreate(BaseModel):
     user_id:int
     access_token:str
@@ -27,5 +29,15 @@ class RequestDetail(BaseModel):
     password : str
     
 class TokenResponse(BaseModel):
-    access_token:str
-    refresh_token:str
+    user: UserResponse
+    access_token: str
+    refresh_token: str
+
+    model_config = ConfigDict(from_attributes=True)
+    
+class Products(BaseModel):
+    product_id:int
+    product_name:str
+    product_description:str
+    product_price:float
+    product_stoke:int
