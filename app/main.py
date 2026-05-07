@@ -133,6 +133,10 @@ def add_product(product:Product,dependencies=Depends(JWTBearer()),db:Session=Dep
     user_log_id = payload['sub']
     new_product = Products(user_id=user_log_id,product_name=product.product_name,product_description=product.product_description,product_price=product.product_price,product_stoke=product.product_stoke)
     is_seller = db.query(Users.is_seller).where(Users.id==user_log_id)
+    
+    if product.product_stoke <= 0:
+        raise HTTPException(status_code=400,detail="Product Stoke has to be atleast 1.")
+    
     if is_seller:
         db.add(new_product)
         db.commit()
@@ -167,3 +171,4 @@ def delete_product(id,dependencies=Depends(JWTBearer()),db:Session=Depends(get_d
     return {"Product Deleted Successfully"}
 
 # Buying products
+
