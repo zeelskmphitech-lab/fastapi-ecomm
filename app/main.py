@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
 from db.database import session, engine
@@ -41,6 +42,14 @@ from typing import List, Optional
 from datetime import datetime
 
 api = FastAPI(title="FastAPI E-Commerce API")
+
+api.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 database_models.base.metadata.create_all(bind=engine)
 
@@ -619,3 +628,6 @@ def search_products(query: str, db: Session = Depends(get_db)):
 static_dir = Path(__file__).resolve().parents[1] / "frontend"
 api.mount("/", StaticFiles(directory=str(static_dir), html=True), name="frontend")
 
+
+
+# https://docs.google.com/document/d/14onmXFCQL_AqgE837KHe8FirQBLayT8Y8qdUAGpjqow/edit?tab=t.0

@@ -1,3 +1,4 @@
+import secrets
 from passlib.context import CryptContext
 from jose import jwt
 from typing import Any
@@ -25,7 +26,12 @@ def create_access_token(subject: str | Any,expiry_time:int=None)->str:
     else:
         expiry_time = datetime.now(UTC) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
         
-    to_encode = {"exp":expiry_time,"sub":str(subject)}
+    to_encode = {
+        "exp": expiry_time,
+        "sub": str(subject),
+        "iat": datetime.now(UTC),
+        "jti": secrets.token_urlsafe(16),
+    }
     encode_jwt = jwt.encode(to_encode,JWT_SECRET_KEY,ALGORITHM)
     return encode_jwt
 
@@ -35,6 +41,11 @@ def create_refresh_token(subject: str | Any,expiry_time:int=None)->str:
     else:
         expiry_time = datetime.now(UTC) + timedelta(minutes=REFRESH_TOKEN_EXPIRE_MINUTES)
         
-    to_encode = {"exp":expiry_time,"sub":str(subject)}
+    to_encode = {
+        "exp": expiry_time,
+        "sub": str(subject),
+        "iat": datetime.now(UTC),
+        "jti": secrets.token_urlsafe(16),
+    }
     encode_jwt = jwt.encode(to_encode,JWT_REFRESH_SECRET_KEY,ALGORITHM)
     return encode_jwt

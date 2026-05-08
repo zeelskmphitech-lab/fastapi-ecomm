@@ -3,50 +3,68 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FastAPI E-Commerce Test UI</title>
+  <title>FastAPI E-Commerce Demo</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-    <h1>FastAPI E-Commerce Tester</h1>
-    <div class="header-actions">
-      <button id="btn-show-login">Login</button>
-      <button id="btn-show-register">Register</button>
-      <button id="btn-show-products">Products</button>
-      <button id="btn-show-cart">Cart</button>
+  <header class="site-header">
+    <div class="brand">
+      <div class="logo">E-Store</div>
+      <span class="tagline">FastAPI demo storefront</span>
     </div>
+    <nav>
+      <button id="btn-show-login" class="nav-button">Login</button>
+      <button id="btn-show-register" class="nav-button">Register</button>
+      <button id="btn-show-products" class="nav-button">Products</button>
+      <button id="btn-show-cart" class="nav-button">Cart</button>
+    </nav>
   </header>
 
-  <main>
-    <section id="message" class="message"></section>
-
-    <section id="login-section" class="panel">
-      <h2>Login</h2>
-      <label>Email<input type="email" id="login-email" placeholder="email@example.com"></label>
-      <label>Password<input type="password" id="login-password"></label>
-      <button id="btn-login">Login</button>
-      <p>Use this to request protected endpoints.</p>
+  <main class="container">
+    <section id="hero" class="hero-panel">
+      <div>
+        <h1>Shop in a clean FastAPI storefront</h1>
+        <p>Use this interface to test your backend endpoints with a modern-looking frontend. Login, browse products, add items to cart, and place orders.</p>
+        <p class="note">If you open this page via VS Code Live Server on port 5500, the frontend will still talk to the API on port 8000.</p>
+      </div>
+      <div class="hero-actions">
+        <button id="btn-show-register" class="primary">Create account</button>
+        <button id="btn-show-login" class="secondary">Login</button>
+      </div>
     </section>
 
-    <section id="register-section" class="panel hidden">
-      <h2>Register</h2>
-      <label>First name<input type="text" id="register-firstname"></label>
-      <label>Last name<input type="text" id="register-lastname"></label>
-      <label>Username<input type="text" id="register-username"></label>
-      <label>Email<input type="email" id="register-email"></label>
-      <label>Password<input type="password" id="register-password"></label>
-      <button id="btn-register">Register</button>
+    <section id="message" class="message"></section>
+
+    <section id="auth-section" class="grid-panel">
+      <article id="login-section" class="panel card">
+        <h2>Login</h2>
+        <label>Email<input type="email" id="login-email" placeholder="email@example.com"></label>
+        <label>Password<input type="password" id="login-password" placeholder="********"></label>
+        <button id="btn-login">Login</button>
+      </article>
+
+      <article id="register-section" class="panel card hidden">
+        <h2>Create account</h2>
+        <label>First name<input type="text" id="register-firstname" placeholder="First"></label>
+        <label>Last name<input type="text" id="register-lastname" placeholder="Last"></label>
+        <label>Username<input type="text" id="register-username" placeholder="Username"></label>
+        <label>Email<input type="email" id="register-email" placeholder="email@example.com"></label>
+        <label>Password<input type="password" id="register-password" placeholder="********"></label>
+        <button id="btn-register">Register</button>
+      </article>
     </section>
 
     <section id="products-section" class="panel hidden">
-      <h2>Products</h2>
-      <div class="inline-row">
-        <input type="text" id="search-query" placeholder="Search products...">
-        <button id="btn-search">Search</button>
-        <button id="btn-refresh-products">Refresh</button>
+      <div class="section-header">
+        <h2>Products</h2>
+        <div class="search-row">
+          <input type="text" id="search-query" placeholder="Search products...">
+          <button id="btn-search">Search</button>
+          <button id="btn-refresh-products" class="secondary">Refresh</button>
+        </div>
       </div>
-      <div id="products-list" class="list"></div>
-      <div class="inline-row">
+      <div id="products-list" class="cards"></div>
+      <div class="cart-action-row">
         <input type="number" id="product-add-id" placeholder="Product ID" min="1">
         <input type="number" id="product-add-qty" placeholder="Quantity" min="1" value="1">
         <button id="btn-add-to-cart">Add to Cart</button>
@@ -54,18 +72,20 @@
     </section>
 
     <section id="cart-section" class="panel hidden">
-      <h2>Your Cart</h2>
-      <div class="inline-row">
-        <button id="btn-refresh-cart">Refresh Cart</button>
-        <button id="btn-clear-cart">Clear Cart</button>
-        <button id="btn-place-order">Place Order</button>
+      <div class="section-header">
+        <h2>Your Cart</h2>
+        <div>
+          <button id="btn-refresh-cart" class="secondary">Refresh</button>
+          <button id="btn-clear-cart" class="secondary">Clear Cart</button>
+          <button id="btn-place-order" class="primary">Place Order</button>
+        </div>
       </div>
-      <div id="cart-list" class="list"></div>
+      <div id="cart-list" class="cards"></div>
     </section>
   </main>
 
-  <footer>
-    <p>Open this page from <strong>http://127.0.0.1:8000/</strong> after starting the FastAPI server.</p>
+  <footer class="site-footer">
+    <p>API requests are sent to <strong>http://127.0.0.1:8000</strong>.</p>
   </footer>
   <script src="app.js"></script>
 </body>
