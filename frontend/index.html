@@ -3,50 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FastAPI E-Commerce Demo</title>
+  <title>E-Store | FastAPI Demo</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="site-header">
     <div class="brand">
       <div class="logo">E-Store</div>
-      <span class="tagline">FastAPI demo storefront</span>
+      <div class="tagline">FastAPI powered storefront</div>
     </div>
-    <nav>
-      <button id="btn-show-login" class="nav-button">Login</button>
-      <button id="btn-show-register" class="nav-button">Register</button>
+    <nav class="nav-actions">
+      <button id="btn-show-home" class="nav-button">Home</button>
       <button id="btn-show-products" class="nav-button">Products</button>
       <button id="btn-show-cart" class="nav-button">Cart</button>
+      <button id="btn-show-orders" class="nav-button">Orders</button>
+      <button id="btn-show-seller" class="nav-button">Seller</button>
+      <button id="btn-show-auth" class="nav-button">Login / Register</button>
     </nav>
   </header>
 
   <main class="container">
-    <section id="hero" class="hero-panel">
+    <section id="hero-panel" class="hero-panel">
       <div>
-        <h1>Shop in a clean FastAPI storefront</h1>
-        <p>Use this interface to test your backend endpoints with a modern-looking frontend. Login, browse products, add items to cart, and place orders.</p>
-        <p class="note">If you open this page via VS Code Live Server on port 5500, the frontend will still talk to the API on port 8000.</p>
+        <h1>Shop faster with a clean FastAPI frontend</h1>
+        <p>Register, login, browse products, add to cart, place orders, and manage your seller store from one interface.</p>
+        <div class="hero-actions">
+          <button id="hero-register" class="primary">Create Account</button>
+          <button id="hero-login" class="secondary">Login</button>
+        </div>
       </div>
-      <div class="hero-actions">
-        <button id="btn-show-register" class="primary">Create account</button>
-        <button id="btn-show-login" class="secondary">Login</button>
+      <div class="hero-illustration">
+        <div class="hero-card">FastAPI Store Demo</div>
       </div>
     </section>
 
-    <section id="message" class="message"></section>
+    <div id="message" class="message"></div>
 
-    <section id="auth-section" class="grid-panel">
-      <article id="login-section" class="panel card">
+    <section id="auth-section" class="panel grid-panel hidden">
+      <article id="login-section" class="card">
         <h2>Login</h2>
         <label>Email<input type="email" id="login-email" placeholder="email@example.com"></label>
         <label>Password<input type="password" id="login-password" placeholder="********"></label>
         <button id="btn-login">Login</button>
       </article>
 
-      <article id="register-section" class="panel card hidden">
-        <h2>Create account</h2>
-        <label>First name<input type="text" id="register-firstname" placeholder="First"></label>
-        <label>Last name<input type="text" id="register-lastname" placeholder="Last"></label>
+      <article id="register-section" class="card hidden">
+        <h2>Register</h2>
+        <label>First name<input type="text" id="register-firstname" placeholder="First name"></label>
+        <label>Last name<input type="text" id="register-lastname" placeholder="Last name"></label>
         <label>Username<input type="text" id="register-username" placeholder="Username"></label>
         <label>Email<input type="email" id="register-email" placeholder="email@example.com"></label>
         <label>Password<input type="password" id="register-password" placeholder="********"></label>
@@ -56,31 +60,63 @@
 
     <section id="products-section" class="panel hidden">
       <div class="section-header">
-        <h2>Products</h2>
+        <div>
+          <h2>Products</h2>
+          <p>Browse inventory and add items directly to your cart.</p>
+        </div>
         <div class="search-row">
           <input type="text" id="search-query" placeholder="Search products...">
-          <button id="btn-search">Search</button>
+          <button id="btn-search" class="secondary">Search</button>
           <button id="btn-refresh-products" class="secondary">Refresh</button>
         </div>
       </div>
       <div id="products-list" class="cards"></div>
-      <div class="cart-action-row">
-        <input type="number" id="product-add-id" placeholder="Product ID" min="1">
-        <input type="number" id="product-add-qty" placeholder="Quantity" min="1" value="1">
-        <button id="btn-add-to-cart">Add to Cart</button>
-      </div>
     </section>
 
     <section id="cart-section" class="panel hidden">
       <div class="section-header">
-        <h2>Your Cart</h2>
         <div>
+          <h2>Your Cart</h2>
+          <p>Review items before placing your order.</p>
+        </div>
+        <div class="action-row">
           <button id="btn-refresh-cart" class="secondary">Refresh</button>
           <button id="btn-clear-cart" class="secondary">Clear Cart</button>
           <button id="btn-place-order" class="primary">Place Order</button>
         </div>
       </div>
       <div id="cart-list" class="cards"></div>
+    </section>
+
+    <section id="orders-section" class="panel hidden">
+      <div class="section-header">
+        <div>
+          <h2>My Orders</h2>
+          <p>Track your recent purchases.</p>
+        </div>
+        <button id="btn-refresh-orders" class="secondary">Refresh</button>
+      </div>
+      <div id="orders-list" class="cards"></div>
+    </section>
+
+    <section id="seller-section" class="panel hidden">
+      <div class="section-header">
+        <div>
+          <h2>Seller Dashboard</h2>
+          <p>Create products and manage your listings.</p>
+        </div>
+        <button id="btn-become-seller" class="secondary">Become Seller</button>
+      </div>
+      <article class="card seller-card">
+        <h3>Create Product</h3>
+        <label>Product Name<input type="text" id="product-name" placeholder="Example: Wireless Headphones"></label>
+        <label>Description<textarea id="product-description" placeholder="Product description"></textarea></label>
+        <label>Price<input type="number" id="product-price" placeholder="99.99" step="0.01"></label>
+        <label>Stock<input type="number" id="product-stock" placeholder="10"></label>
+        <label>Category<input type="text" id="product-category" placeholder="Electronics"></label>
+        <button id="btn-create-product" class="primary">Create Product</button>
+      </article>
+      <div id="seller-products-list" class="cards"></div>
     </section>
   </main>
 

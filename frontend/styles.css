@@ -133,8 +133,8 @@ button:hover {
   box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06);
 }
 
-.panel.hidden {
-  display: none;
+.hidden {
+  display: none !important;
 }
 
 .section-header {
