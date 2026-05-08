@@ -32,6 +32,11 @@ const setToken = (token) => {
 
 const getToken = () => localStorage.getItem(tokenKey);
 
+const productImageUrl = (product) => {
+  const category = product.category || 'product';
+  return `https://source.unsplash.com/520x360/?${encodeURIComponent(category)},shop`;
+};
+
 const clearAuth = () => {
   localStorage.removeItem(tokenKey);
   currentUser = null;
@@ -108,22 +113,25 @@ const refreshProducts = async (query = '') => {
     }
     products.forEach(product => {
       const card = document.createElement('div');
-      card.className = 'item-card';
+      card.className = 'product-card';
       card.innerHTML = `
-        <div>
+        <div class="product-image">
+          <img src="${productImageUrl(product)}" alt="${product.product_name}">
+        </div>
+        <div class="product-details">
+          <div class="product-top">
+            <span class="badge">${product.category || 'General'}</span>
+            <span class="price">$${product.product_price.toFixed(2)}</span>
+          </div>
           <h3>${product.product_name}</h3>
           <p>${product.product_description}</p>
-        </div>
-        <div class="item-meta">
-          <span class="price">$${product.product_price.toFixed(2)}</span>
-          <span>Stock: ${product.product_stoke}</span>
-        </div>
-        <div class="item-meta">
-          <span>Category: ${product.category || 'General'}</span>
-          <span>ID: ${product.product_id}</span>
-        </div>
-        <div class="item-actions">
-          <button class="secondary" onclick="addToCart(${product.product_id}, 1)">Add to Cart</button>
+          <div class="product-meta">
+            <span>Stock: ${product.product_stoke}</span>
+            <span>ID: ${product.product_id}</span>
+          </div>
+          <div class="product-actions">
+            <button class="secondary" onclick="addToCart(${product.product_id}, 1)">Add to Cart</button>
+          </div>
         </div>
       `;
       list.appendChild(card);

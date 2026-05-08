@@ -10,7 +10,7 @@
   <header class="site-header">
     <div class="brand">
       <div class="logo">E-Store</div>
-      <div class="tagline">FastAPI powered storefront</div>
+      <div class="tagline">Modern storefront built on FastAPI</div>
     </div>
     <nav class="nav-actions">
       <button id="btn-show-home" class="nav-button">Home</button>
@@ -18,51 +18,65 @@
       <button id="btn-show-cart" class="nav-button">Cart</button>
       <button id="btn-show-orders" class="nav-button">Orders</button>
       <button id="btn-show-seller" class="nav-button">Seller</button>
-      <button id="btn-show-auth" class="nav-button">Login / Register</button>
+      <button id="btn-show-auth" class="nav-button">Account</button>
     </nav>
   </header>
 
   <main class="container">
     <section id="hero-panel" class="hero-panel">
-      <div>
-        <h1>Shop faster with a clean FastAPI frontend</h1>
-        <p>Register, login, browse products, add to cart, place orders, and manage your seller store from one interface.</p>
+      <div class="hero-copy">
+        <span class="eyebrow">FastAPI Shop</span>
+        <h1>Discover beautiful products with a fast, secure backend.</h1>
+        <p>Browse curated items, add to cart, and place orders through a real API-powered storefront. Designed to feel modern and production-ready.</p>
         <div class="hero-actions">
-          <button id="hero-register" class="primary">Create Account</button>
+          <button id="hero-register" class="primary">Create account</button>
           <button id="hero-login" class="secondary">Login</button>
         </div>
+        <div class="hero-stats">
+          <div>
+            <span>120+</span>
+            <p>Products</p>
+          </div>
+          <div>
+            <span>4.9/5</span>
+            <p>App rating</p>
+          </div>
+          <div>
+            <span>24/7</span>
+            <p>API uptime</p>
+          </div>
+        </div>
       </div>
-      <div class="hero-illustration">
-        <div class="hero-card">FastAPI Store Demo</div>
+      <div class="hero-visual">
+        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80" alt="Storefront hero image">
       </div>
     </section>
 
     <div id="message" class="message"></div>
 
     <section id="auth-section" class="panel grid-panel hidden">
-      <article id="login-section" class="card">
+      <article id="login-section" class="card auth-card">
         <h2>Login</h2>
         <label>Email<input type="email" id="login-email" placeholder="email@example.com"></label>
         <label>Password<input type="password" id="login-password" placeholder="********"></label>
-        <button id="btn-login">Login</button>
+        <button id="btn-login" class="primary">Login</button>
       </article>
-
-      <article id="register-section" class="card hidden">
-        <h2>Register</h2>
+      <article id="register-section" class="card auth-card hidden">
+        <h2>Create account</h2>
         <label>First name<input type="text" id="register-firstname" placeholder="First name"></label>
         <label>Last name<input type="text" id="register-lastname" placeholder="Last name"></label>
         <label>Username<input type="text" id="register-username" placeholder="Username"></label>
         <label>Email<input type="email" id="register-email" placeholder="email@example.com"></label>
         <label>Password<input type="password" id="register-password" placeholder="********"></label>
-        <button id="btn-register">Register</button>
+        <button id="btn-register" class="primary">Register</button>
       </article>
     </section>
 
     <section id="products-section" class="panel hidden">
       <div class="section-header">
         <div>
-          <h2>Products</h2>
-          <p>Browse inventory and add items directly to your cart.</p>
+          <h2>Featured products</h2>
+          <p>FastAPI powers every request, while this UI delivers a polished shopping experience.</p>
         </div>
         <div class="search-row">
           <input type="text" id="search-query" placeholder="Search products...">
@@ -76,7 +90,7 @@
     <section id="cart-section" class="panel hidden">
       <div class="section-header">
         <div>
-          <h2>Your Cart</h2>
+          <h2>Your cart</h2>
           <p>Review items before placing your order.</p>
         </div>
         <div class="action-row">
@@ -91,8 +105,8 @@
     <section id="orders-section" class="panel hidden">
       <div class="section-header">
         <div>
-          <h2>My Orders</h2>
-          <p>Track your recent purchases.</p>
+          <h2>My orders</h2>
+          <p>See order history and order details at a glance.</p>
         </div>
         <button id="btn-refresh-orders" class="secondary">Refresh</button>
       </div>
@@ -102,15 +116,15 @@
     <section id="seller-section" class="panel hidden">
       <div class="section-header">
         <div>
-          <h2>Seller Dashboard</h2>
-          <p>Create products and manage your listings.</p>
+          <h2>Seller dashboard</h2>
+          <p>Publish products and manage your inventory from here.</p>
         </div>
-        <button id="btn-become-seller" class="secondary">Become Seller</button>
+        <button id="btn-become-seller" class="secondary">Become seller</button>
       </div>
       <article class="card seller-card">
-        <h3>Create Product</h3>
-        <label>Product Name<input type="text" id="product-name" placeholder="Example: Wireless Headphones"></label>
-        <label>Description<textarea id="product-description" placeholder="Product description"></textarea></label>
+        <h3>Create product</h3>
+        <label>Product name<input type="text" id="product-name" placeholder="Wireless Headphones"></label>
+        <label>Description<textarea id="product-description" placeholder="Enter product description"></textarea></label>
         <label>Price<input type="number" id="product-price" placeholder="99.99" step="0.01"></label>
         <label>Stock<input type="number" id="product-stock" placeholder="10"></label>
         <label>Category<input type="text" id="product-category" placeholder="Electronics"></label>
@@ -121,7 +135,10 @@
   </main>
 
   <footer class="site-footer">
-    <p>API requests are sent to <strong>http://127.0.0.1:8000</strong>.</p>
+    <div class="footer-grid">
+      <p>API requests are sent to <strong>http://127.0.0.1:8000</strong>.</p>
+      <p>Open this page from the backend server or any browser that can reach the API.</p>
+    </div>
   </footer>
   <script src="app.js"></script>
 </body>
