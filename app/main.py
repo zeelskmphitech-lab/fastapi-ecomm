@@ -42,9 +42,6 @@ from datetime import datetime
 
 api = FastAPI(title="FastAPI E-Commerce API")
 
-static_dir = Path(__file__).resolve().parents[1] / "frontend"
-api.mount("/", StaticFiles(directory=str(static_dir), html=True), name="frontend")
-
 database_models.base.metadata.create_all(bind=engine)
 
 
@@ -616,4 +613,9 @@ def search_products(query: str, db: Session = Depends(get_db)):
         Products.product_name.ilike(f"%{query}%") | Products.product_description.ilike(f"%{query}%")
     )
     return products.order_by(Products.created_at.desc()).all()
+
+
+# Mount static files at root - MUST be last so API routes are matched first
+static_dir = Path(__file__).resolve().parents[1] / "frontend"
+api.mount("/", StaticFiles(directory=str(static_dir), html=True), name="frontend")
 
