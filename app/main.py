@@ -1,4 +1,6 @@
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.staticfiles import StaticFiles
+from pathlib import Path
 from db.database import session, engine
 import models.database_models as database_models
 from schemas.models import (
@@ -39,6 +41,9 @@ from typing import List, Optional
 from datetime import datetime
 
 api = FastAPI(title="FastAPI E-Commerce API")
+
+static_dir = Path(__file__).resolve().parents[1] / "frontend"
+api.mount("/", StaticFiles(directory=str(static_dir), html=True), name="frontend")
 
 database_models.base.metadata.create_all(bind=engine)
 
