@@ -6,14 +6,13 @@ from fastapi.security import HTTPAuthorizationCredentials,HTTPBearer
 from functools import wraps
 from models.database_models import Users,Token
 
-
 def decode_jwt(jwtoken:str):
     try:
         payload = jwt.decode(jwtoken,JWT_SECRET_KEY,ALGORITHM)
         return payload
     except InvalidTokenError:
         return None
-    
+     
 class JWTBearer(HTTPBearer):
     def __init__(self,auto_error:bool=True):
         super(JWTBearer,self).__init__(auto_error=auto_error)
@@ -51,8 +50,7 @@ def token_required(func):
         user_id = payload['sub']
         data= kwargs['db'].query(Token).filter_by(user_id=user_id,access_token=kwargs['dependencies'],is_active=True).first()
         if data:
-            return func(*args, **kwargs)
-        
+            return func(*args, **kwargs)   
         else:
             raise HTTPException(status_code=401,detail="Token blocked")
     return wrapper

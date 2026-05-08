@@ -55,3 +55,53 @@ class UpdateProduct(BaseModel):
     product_description:Optional[str] = None
     product_price:Optional[float] = None
     product_stoke:Optional[int] = None
+    
+    
+# buying product
+
+class CartItem(BaseModel):
+    product_id : int
+    quantity : int
+    
+class CartResponse(BaseModel):
+    cart_id : int
+    user_id : int
+    created_at : datetime.datetime
+    is_active : bool
+    items : list[CartItem]  
+    model_config = ConfigDict(from_attributes=True)
+    
+class OrderItem(BaseModel):
+    product_id : int
+    quantity : int
+    total_price : float
+    
+class OrderResponse(BaseModel):
+    order_id : int
+    user_id : int
+    total_amount : float
+    created_at : datetime.datetime
+    delivery_address : str
+    order_status : str
+    payment_status : str
+    items : list[OrderItem]
+    
+    model_config = ConfigDict(from_attributes=True)
+    
+class OrderCreate(BaseModel):
+    delivery_address : str
+    items : list[CartItem]
+    
+class OrderUpdate(BaseModel):
+    delivery_address : Optional[str] = None
+    order_status : Optional[str] = None
+    payment_status : Optional[str] = None
+
+class Review(BaseModel):
+    product_id : int
+    rating : int
+    comment : Optional[str] = None
+    
+class Favorite(BaseModel):
+    product_id : int
+    
